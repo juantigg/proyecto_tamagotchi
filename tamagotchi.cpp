@@ -11,7 +11,7 @@ void mostrar_mapa(string mapa[][4]);
 
 
 int main () {
-
+    srand(time(0));
     string nombre;
     string id;
     string figura;
