@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 void mostrarEstado (int&, int&, int&, int&, string&, string&);
@@ -8,7 +9,7 @@ void dormir (int&, int&);
 char menu(char&, string&);
 void trabajar (int&, int&, int&, int&);
 void mostrar_mapa(string mapa[][4]);
-
+void eventorand(int&,int&);
 
 int main () {
 
@@ -73,6 +74,9 @@ int main () {
     
         case '8':
         break;
+        }
+        if (caracter!=-1){
+    eventorand(felicidad,hambre);
         }
     } while (caracter != '8'); 
 }
@@ -196,5 +200,29 @@ void mostrar_mapa(string mapa[][4]) {
                     cout << endl;
             }
         }
+    }
+}
+
+void eventorand(int hambre, int felicidad){
+int randnum = rand()% 10; //se toma cada unidad como 10%.
+    if(randnum==0){
+        int signo=rand()%2; // si se le suma o se le resta 10, si es 0 +10 o si es 1 -10
+        int caracteristica=rand()%2; // caracteristica es si, o hambre o felicidad 1. hambre 2. felicidad
+        if(caracteristica==0){
+            if(signo==0){
+                hambre+=10;}
+            else{
+                hambre-=10;
+            }
+        }
+        else{
+           if(signo==0){
+                felicidad+=10;
+           }
+            else{
+                felicidad-=10;
+            }
+        }
+    cout << "Ocurrio un evento Aleatorio"<<endl;
     }
 }
