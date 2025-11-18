@@ -1,19 +1,22 @@
 #include <iostream>
 using namespace std;
 
-void mostrarEstado (int, int, int, int, string);
-void comer (int, int);
-void eleccion (int, string);
-void dormir (int, int);
-char menu(char, string);
-void trabajar (int, int, int, int);
+void mostrarEstado (int&, int&, int&, int&, string&, string&);
+void comer (int&, int&);
+void eleccion (int&, string&);
+void dormir (int&, int&);
+char menu(char&, string&);
+void trabajar (int&, int&, int&, int&);
+void mostrar_mapa(string mapa[][4]);
+
+
 int main () {
 
     string nombre;
     string id;
     string figura;
 
-    int mapa[4][4];
+    string mapa[4][4];
     int numero = 0;
     int hambre = 0;
     int energia = 100;
@@ -29,96 +32,103 @@ int main () {
     cin >> id;
 
     // zᶻ   ૮˶- ﻌ -˶ა⌒)ᦱ PA DORMIR
+    
+
+    do {
     menu(caracter, nombre);
-while(caracter != -1) {
+
     switch (caracter){
 
-        case 1:
-        mostrarEstado (hambre, energia, felicidad, dinero, figura);
+        case '1':
+        mostrarEstado (hambre, energia, felicidad, dinero, figura, nombre);
         break;
 
-        case 2:
+        case '2':
         comer(dinero, hambre);
         break;
 
-        case 3:
+        case '3':
+        cout << "Tu mascota duerme zzz" << endl;
         dormir(energia, hambre);
         break;
 
-        case 4:
+        case '4':
+        cout << "Tu mascota se va a trabajar (?)" << endl;
         trabajar(energia, dinero, felicidad, hambre);
-
-        case 5:
-        // aqui va la funcion para moverse en el mapa
+        break;
+        
+        case '5':
+        cout << "Este es el mapa de la ciudad" << endl;
+        mostrar_mapa(mapa);
+        cout << endl << "A donde te gustaria ir?" << endl;
         break;
 
-        case 6:
+        case '6':
         // aqui va la funcion para guardar en un archivo pero eso no lo hemos visto
         break;
 
-        case 7:
+        case '7':
         // aqui va la funcion para cargar en un archivo pero tampoco lo hemos visto
         break;
     
-        case -1:
+        case '8':
         break;
-    }
-
+        }
+    } while (caracter != '8'); 
 }
-}
 
-void eleccion(int n, string texto) {
+void eleccion(int& numero, string& figura) {
         
     cout << "¡Bienvenid@ a tu Tamagotchi!" << endl;
     cout << "Para empezar, por favor elige tu mascota" << endl;
-    cout << "1. ≽(•⩊ •マ≼ GATO" <<  endl;
-    cout << "2. ૮ • ⩊ - ა PERRO" << endl;
-    cout << "3. ૮꒰˶ᵔ ᗜ ᵔ˶꒱ა CONEJO" << endl;
+    cout << "1. )^w^)/ GATO" <<  endl;
+    cout << "2. /(OwO)/ PERRO" << endl;
+    cout << "3. /)*u*)/ CONEJO" << endl;
     cout << "Introduce tu eleccion: ";
-    cin >> n;
+    cin >> numero;
 
-    while (n != 1 && n != 2 && n != 3) {
+    while (numero != 1 && numero != 2 && numero != 3) {
         cout << "Introduce una eleccion valida (1, 2 o 3): ";
-        cin >> n;
+        cin >> numero;
     }
-    if (n == 1) {
-        cout << "¡Haz escogido gato! ≽(•⩊ •マ≼";
-        texto = "≽(•⩊ •マ≼";
-    } else if (n == 2) {
-        cout << "¡Haz escogido perro! ૮ • ⩊ - ა";
-        texto = "૮ • ⩊ - ა";
-    } else if (n == 3) {
-        cout << "¡Haz escogido conejo! ૮꒰˶ᵔ ᗜ ᵔ˶꒱";
-        texto = "૮꒰˶ᵔ ᗜ ᵔ˶꒱ა";
+    if (numero == 1) {
+        cout << "¡Haz escogido gato! )^w^)/" << endl;
+        figura = ")^w^)/";
+    } else if (numero == 2) {
+        cout << "¡Haz escogido perro! /(OwO)/" << endl;
+        figura = "/(OwO)/";
+    } else if (numero == 3) {
+        cout << "¡Haz escogido conejo! /)*u*)/" << endl;
+        figura = "/)*u*)/";
     }
 }
 
-void mostrarEstado(int n, int n1, int n2, int n3, string texto) {
+void mostrarEstado(int& hambre, int& energia, int& felicidad, int& dinero, string& nombre, string& figura) {
     cout << "ESTADO ACTUAL DE TU TAMAGOTCHI"<< endl;
-    cout << texto << endl;
-    cout << "Hambre: " << n << endl;
-    cout << "Energia: " << n1 << endl;
-    cout << "Felicidad: " << n2 << endl;
-    cout << "Dinero: " << n3 << endl;
+    cout << nombre << " " << figura << endl;
+    cout << "Hambre: " << hambre << endl;
+    cout << "Energia: " << energia << endl;
+    cout << "Felicidad: " << felicidad << endl;
+    cout << "Dinero: " << dinero << endl;
 }
 
-void comer(int n, int n1) {
-    if (n >= 20) {
-        n1 -= 30;
-        while (n1 <= 0) {
-            n1++;
+void comer(int& dinero, int& hambre) {
+    if (dinero >= 20) {
+        hambre -= 30;
+        while (hambre <= 0) {
+            hambre++;
         } 
-        n -= 20;
-    } else if (n < 20) {
-        cout << "No tiene suficiente dinero para comer, su dinero actual es de: " << n << endl;
+        dinero -= 20;
+    } else if (dinero < 20) {
+        cout << "No tiene suficiente dinero para comer, su dinero actual es de: " << dinero << endl;
     }
 }
 
-void dormir(int n, int n1) {
-    n = 100;
-    n1 += 20;
-    while (n1 > 100) {
-        n1--;
+void dormir(int& energia, int& hambre) {
+    energia = 100;
+    hambre += 20;
+    while (hambre > 100) {
+        hambre--;
     }
 }
 
@@ -126,35 +136,34 @@ void dormir(int n, int n1) {
 // pero que disminuya la energia en 40 puntos ya que eso daria -20 de energia 
 // debido a esto voy a diseñar la funcion para energia > 40
 
-void trabajar (int n, int n1, int n2, int n3) {
-    if (n >= 40) {
+void trabajar (int& energia, int& dinero, int& felicidad, int& hambre) {
+    if (energia >= 40) {
 
-
-        n -= 40;
-        while (n <= 0) {
-            n++;
+        energia -= 40;
+        while (energia <= 0) {
+            energia++;
         }
 
-        n1 += 100;
+        dinero += 100;
 
-        n2 -= 10;
-        while (n2 <= 0) {
-            n++;
+        felicidad -= 10;
+        while (felicidad <= 0) {
+            felicidad++;
         }
 
 
-        n3 +=10;
-        while (n > 100) {
-            n3--;
+        hambre +=10;
+        while (hambre > 100) {
+            hambre--;
         }
 
-    } else (n < 40); {
+    } else if (energia < 40) {
         cout << "No tienes suficiente energia para trabajar, descansa!";
     }
 }
 
-char menu (char n, string n1) {
-    cout << "Elija la accion que realizara su mascota " << n1 << endl;
+char menu (char& caracter, string& nombre) {
+    cout << "Elija la accion que realizara su mascota " << nombre << endl;
     cout << "1. Ver su estado" << endl;
     cout << "2. Darle de comer" << endl;
     cout << "3. Ponerle a dormir" << endl;
@@ -162,7 +171,30 @@ char menu (char n, string n1) {
     cout << "5. Moverse en el mapa" << endl;
     cout << "6. Guardar su progreso" << endl;
     cout << "7. Cargar su progreso" << endl;
-    cout << "-1 para matar el programa" << endl;
-    cin >> n;
-    return n;
+    cout << "8. para matar el programa" << endl;
+    cin >> caracter;
+    return caracter;
+}
+
+void mostrar_mapa(string mapa[][4]) {
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            mapa[i][j] = "0";
+            }
+        }
+
+        mapa[0][0] = "🏠";
+        mapa[2][2] = "🏥";
+        mapa[1][3] = "🛒";
+        mapa[3][3] = "🌳";
+    
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            cout << mapa[i][j] << " ";
+                if (j == 3) {
+                    cout << endl;
+            }
+        }
+    }
 }
